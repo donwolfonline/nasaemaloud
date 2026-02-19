@@ -15,7 +15,7 @@ export const products: Product[] = [
     { id: "6", category: "العود", name: "الكلمنتان (أوقيتين)", price: 190 },
     { id: "7", category: "العود", name: "زوايا الكمبودي (أوقية)", price: 140 },
     { id: "8", category: "العود", name: "زوايا الكمبودي (أوقيتين)", price: 250 },
-    { id: "9", category: "بخور", name: "بخور ملكي (صغير)", price: 40 },
+    { id: "9", category: "بخور", name: "بخور ملكي (صغير)", price: 45 },
     { id: "10", category: "بخور", name: "بخور ملكي (كبير)", price: 70 },
     { id: "11", category: "بخور", name: "بخور الجوهرة (صغير)", price: 40 },
     { id: "12", category: "بخور", name: "بخور الجوهرة (كبير)", price: 70 },
