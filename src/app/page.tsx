@@ -102,7 +102,7 @@ export default function LandingPage() {
             href="/login"
             className="btn-gold px-5 py-2 rounded-xl text-sm flex items-center gap-2"
           >
-            <span>دخول المتجر</span>
+            <span>تسجيل الدخول</span>
             <ArrowLeft className="w-4 h-4" />
           </Link>
         </div>
