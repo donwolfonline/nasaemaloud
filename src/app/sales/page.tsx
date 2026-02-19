@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
     ArrowRight, Copy, Check, Trash2, ChevronDown, ChevronUp,
-    ShoppingBag, Banknote, CreditCard, TrendingUp, Calendar,
+    ShoppingBag, Banknote, CreditCard, TrendingUp, Calendar, RefreshCw,
 } from "lucide-react";
 import {
     loadAllSales, groupByDay, clearAllSales, formatTime,
@@ -195,20 +195,28 @@ function DaySection({ day }: { day: DaySummary }) {
 // ── Main page ──
 export default function SalesPage() {
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
     const [days, setDays] = useState<DaySummary[]>([]);
     const [showClearConfirm, setShowClearConfirm] = useState(false);
 
+    const loadData = useCallback(async () => {
+        setLoading(true);
+        const sales = await loadAllSales();
+        setDays(groupByDay(sales));
+        setLoading(false);
+    }, []);
+
     useEffect(() => {
         if (!isAuthenticated()) { router.replace("/login"); return; }
-        setDays(groupByDay(loadAllSales()));
-    }, [router]);
+        loadData();
+    }, [router, loadData]);
 
-    const refresh = useCallback(() => setDays(groupByDay(loadAllSales())), []);
+    const refresh = loadData;
 
-    const handleClear = () => {
-        clearAllSales();
+    const handleClear = async () => {
         setDays([]);
         setShowClearConfirm(false);
+        await clearAllSales();
     };
 
     const grandTotal = days.reduce((acc, d) => acc + d.dayTotal, 0);
@@ -237,8 +245,10 @@ export default function SalesPage() {
 
                 <button
                     onClick={refresh}
-                    className="btn-outline px-3 py-1.5 rounded-xl text-xs"
+                    disabled={loading}
+                    className="btn-outline px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 disabled:opacity-50"
                 >
+                    <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
                     تحديث
                 </button>
                 <button

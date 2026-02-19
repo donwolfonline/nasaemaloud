@@ -90,9 +90,20 @@ export default function DashboardPage() {
         setCart((prev) => { const n = new Map(prev); n.delete(id); return n; });
     }, []);
 
-    const resetCart = () => {
-        if (cart.size > 0) {
-            const items = Array.from(cart.values());
+
+    const resetCart = async () => {
+        // Capture current state before clearing
+        const items = Array.from(cart.values());
+        const currentTotal = cartTotal;
+        const currentPayment = paymentMethod;
+
+        // Clear cart immediately for snappy UX
+        setCart(new Map());
+        setSummaryOpen(false);
+        setPaymentMethod("نقدي");
+
+        // Persist sale to DB in background
+        if (items.length > 0) {
             saveSale({
                 timestamp: Date.now(),
                 items: items.map((i) => ({
@@ -102,14 +113,12 @@ export default function DashboardPage() {
                     total: i.product.price * i.quantity,
                     category: i.product.category,
                 })),
-                total: cartTotal,
-                paymentMethod,
-            });
+                total: currentTotal,
+                paymentMethod: currentPayment,
+            }).catch((err) => console.error("resetCart: saveSale failed:", err));
         }
-        setCart(new Map());
-        setSummaryOpen(false);
-        setPaymentMethod("نقدي");
     };
+
 
     const cartItems = Array.from(cart.values());
 
