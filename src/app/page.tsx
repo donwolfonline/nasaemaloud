@@ -291,7 +291,7 @@ export default function LandingPage() {
           <span className="gold-text font-bold text-lg">نسائم العود</span>
         </div>
         <p className="text-silk-500 text-xs">
-          © {new Date().getFullYear()} نسائم العود · جميع الحقوق محفوظة
+          © {new Date().toLocaleDateString("ar-SA-u-ca-islamic-nu-latn", { year: "numeric" })} هـ نسائم العود · جميع الحقوق محفوظة
         </p>
       </footer>
     </div>

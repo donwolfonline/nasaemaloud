@@ -100,8 +100,8 @@ export function groupByDay(sales: SaleRecord[]): DaySummary[] {
         const networkTotal = daySales.filter((s) => s.paymentMethod === "شبكة").reduce((acc, s) => acc + s.total, 0);
 
         const [y, m, d] = key.split("-").map(Number);
-        const label = new Date(y, m - 1, d).toLocaleDateString("ar-EG-u-nu-latn", {
-            weekday: "long", year: "numeric", month: "long", day: "numeric",
+        const label = new Date(y, m - 1, d).toLocaleDateString("ar-SA-u-ca-islamic-nu-latn", {
+            weekday: "long", day: "numeric", month: "long", year: "numeric",
         });
 
         return { dateKey: key, label, sales: daySales, dayTotal, cashTotal, networkTotal };
@@ -110,7 +110,7 @@ export function groupByDay(sales: SaleRecord[]): DaySummary[] {
 
 /** Format a sale timestamp as a short time string (e.g. "04:41 ص"). */
 export function formatTime(timestamp: number): string {
-    return new Date(timestamp).toLocaleTimeString("ar-EG-u-nu-latn", {
+    return new Date(timestamp).toLocaleTimeString("ar-SA-u-ca-islamic-nu-latn", {
         hour: "2-digit", minute: "2-digit", hour12: true,
     });
 }
