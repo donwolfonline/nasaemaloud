@@ -256,32 +256,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CTA BOTTOM ── */}
-      <section className="py-24 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="luxury-card rounded-3xl p-6 sm:p-12 relative overflow-hidden animate-glow-pulse">
-            <div
-              className="absolute inset-0 opacity-5 rounded-3xl"
-              style={{ background: "radial-gradient(ellipse at 50% 0%, #C4A882, transparent 70%)" }}
-            />
-            <div className="relative z-10">
-              <div className="w-16 h-20 mx-auto mb-6">
-                <SmokeIcon className="w-full h-full" />
-              </div>
-              <h3 className="text-3xl font-bold text-silk-100 mb-3">هل أنت مستعد؟</h3>
-              <p className="text-silk-400 mb-8">ابدأ تجربة التسوق الفاخرة مع نسائم العود</p>
-              <Link
-                href="/login"
-                className="btn-gold inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-base"
-              >
-                <span>دخول نظام المبيعات</span>
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── FOOTER ── */}
       <footer className="border-t border-champagne-900/20 py-8 px-6 text-center">
         <div className="flex items-center justify-center gap-3 mb-3">
