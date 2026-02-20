@@ -128,27 +128,27 @@ export default function DashboardPage() {
             style={{ background: "linear-gradient(160deg, #0D110F 0%, #171D1B 40%, #1A231E 100%)" }}
         >
             {/* ── HEADER ── */}
-            <header className="sticky top-0 z-40 glass border-b border-champagne-900/15 px-4 py-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="w-7 h-10 flex-shrink-0">
+            <header className="sticky top-0 z-40 glass border-b border-champagne-900/15 px-2.5 sm:px-4 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-6 h-9 sm:w-7 sm:h-10 flex-shrink-0">
                         <SmokeIcon className="w-full h-full" />
                     </div>
                     <div className="leading-none">
-                        <span className="shimmer-text font-bold text-base block">نسائم العود</span>
-                        <span className="text-champagne-700 text-xs">نقطة البيع</span>
+                        <span className="shimmer-text font-bold text-sm sm:text-base block">نسائم العود</span>
+                        <span className="text-champagne-700 text-[10px] sm:text-xs font-medium">نقطة البيع</span>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2">
                     {/* Mobile cart trigger */}
                     <button
                         onClick={() => setSummaryOpen(!summaryOpen)}
-                        className="relative flex items-center gap-2 btn-outline px-3 py-2 rounded-xl text-sm md:hidden"
+                        className="relative flex items-center gap-1.5 btn-outline px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl text-sm md:hidden"
                     >
-                        <ShoppingBag className="w-4 h-4" />
-                        <span className="font-bold text-champagne-400">{cartTotal} ر</span>
+                        <ShoppingBag className="w-4 h-4 text-champagne-500" />
+                        <span className="font-bold text-champagne-400 text-xs sm:text-sm">{cartTotal} <span className="text-[10px] font-normal">ر</span></span>
                         {cartItemCount > 0 && (
-                            <span className="absolute -top-1.5 -end-1.5 bg-gradient-to-br from-champagne-400 to-champagne-600 text-charcoal-900 text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-gold">
+                            <span className="absolute -top-1.5 -end-1.5 bg-gradient-to-br from-champagne-400 to-champagne-600 text-charcoal-900 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-gold border border-[#0d110f] flex-shrink-0">
                                 {cartItemCount > 9 ? "9+" : cartItemCount}
                             </span>
                         )}
@@ -157,7 +157,8 @@ export default function DashboardPage() {
                     {/* Sales history link */}
                     <Link
                         href="/sales"
-                        className="flex items-center gap-1.5 btn-outline px-3 py-2 rounded-xl text-sm"
+                        className="flex items-center justify-center w-9 h-9 sm:w-auto sm:gap-1.5 btn-outline sm:px-3 sm:py-2 rounded-xl text-sm"
+                        title="سجل المبيعات"
                     >
                         <ClipboardList className="w-4 h-4" />
                         <span className="hidden sm:inline text-xs">السجل</span>
@@ -165,7 +166,8 @@ export default function DashboardPage() {
 
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-1.5 bg-red-950/30 border border-red-500/20 text-red-400 px-3 py-2 rounded-xl text-sm hover:bg-red-950/50 transition-colors"
+                        className="flex items-center justify-center w-9 h-9 sm:w-auto sm:gap-1.5 bg-red-950/30 border border-red-500/20 text-red-400 sm:px-3 sm:py-2 rounded-xl text-sm hover:bg-red-950/50 active:scale-95 transition-all"
+                        title="تسجيل الخروج"
                     >
                         <LogOut className="w-4 h-4" />
                         <span className="hidden sm:inline text-xs">خروج</span>
@@ -212,12 +214,14 @@ export default function DashboardPage() {
                                         )}
 
                                         {/* Tap area */}
-                                        <button onClick={() => addProduct(product)} className="w-full p-3 text-start relative">
-                                            <div className="text-2xl mb-2">{categoryIcons[product.category]}</div>
-                                            <p className="text-silk-200 text-xs font-medium leading-snug mb-2 line-clamp-2">{product.name}</p>
-                                            <p className="font-bold text-sm">
+                                        <button onClick={() => addProduct(product)} className="w-full p-2.5 sm:p-3 text-start relative group active:scale-[0.98] transition-transform">
+                                            <div className="text-xl sm:text-2xl mb-1.5 sm:mb-2">{categoryIcons[product.category]}</div>
+                                            <p className="text-silk-200 text-[11px] sm:text-xs font-medium leading-tight mb-1.5 sm:mb-2 line-clamp-2 h-7 sm:h-8">
+                                                {product.name}
+                                            </p>
+                                            <p className="font-bold text-sm sm:text-base">
                                                 <span className="gold-text">{product.price}</span>
-                                                <span className="text-champagne-700 text-xs font-normal"> ريال</span>
+                                                <span className="text-champagne-700 text-[10px] sm:text-xs font-normal"> ريال</span>
                                             </p>
                                         </button>
 
@@ -226,14 +230,14 @@ export default function DashboardPage() {
                                             <div className="flex items-center gap-1 px-2 pb-2 animate-fade-in">
                                                 <button
                                                     onClick={() => setQuantity(product.id, qty - 1)}
-                                                    className="flex-1 flex items-center justify-center py-1.5 rounded-lg border border-champagne-800/40 text-champagne-500 hover:bg-champagne-900/20 transition-colors"
+                                                    className="flex-1 h-7 sm:h-8 flex items-center justify-center rounded-lg border border-champagne-800/40 text-champagne-500 hover:bg-champagne-900/20 active:bg-champagne-950/40 transition-colors"
                                                 >
                                                     <Minus className="w-3 h-3" />
                                                 </button>
-                                                <span className="text-silk-200 font-bold text-xs w-6 text-center">{qty}</span>
+                                                <span className="text-silk-200 font-bold text-xs w-5 text-center">{qty}</span>
                                                 <button
                                                     onClick={() => addProduct(product)}
-                                                    className="flex-1 flex items-center justify-center py-1.5 rounded-lg bg-champagne-900/30 border border-champagne-700/30 text-champagne-400 hover:bg-champagne-900/50 transition-colors"
+                                                    className="flex-1 h-7 sm:h-8 flex items-center justify-center rounded-lg bg-champagne-900/30 border border-champagne-700/30 text-champagne-400 hover:bg-champagne-900/50 active:bg-champagne-800/60 transition-colors"
                                                 >
                                                     <Plus className="w-3 h-3" />
                                                 </button>
@@ -331,27 +335,28 @@ function SaleSummary({ cartItems, cartTotal, onRemove, onSetQty, onReset, paymen
                     </div>
                 ) : (
                     cartItems.map((item) => (
-                        <div key={item.product.id} className="luxury-card rounded-xl p-2.5 flex items-center gap-2 animate-fade-in">
+                        <div key={item.product.id} className="luxury-card rounded-xl p-2 sm:p-2.5 flex items-center gap-2 animate-fade-in group active:scale-[0.99] transition-transform">
                             <span className="text-xl flex-shrink-0">{categoryIcons[item.product.category]}</span>
                             <div className="flex-1 min-w-0">
-                                <p className="text-silk-200 text-xs font-medium truncate">{item.product.name}</p>
-                                <p className="text-champagne-600 text-xs">
+                                <p className="text-silk-200 text-[11px] sm:text-xs font-medium truncate">{item.product.name}</p>
+                                <p className="text-champagne-600 text-[10px] sm:text-xs">
                                     {item.product.price} × {item.quantity} = <span className="text-champagne-400 font-bold">{item.product.price * item.quantity}</span> ريال
                                 </p>
                             </div>
                             <div className="flex items-center gap-1 flex-shrink-0">
                                 <button onClick={() => onSetQty(item.product.id, item.quantity - 1)}
-                                    className="w-6 h-6 rounded-lg border border-champagne-800/30 text-champagne-600 flex items-center justify-center hover:bg-champagne-900/20 transition-colors">
-                                    <Minus className="w-3 h-3" />
+                                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border border-champagne-800/30 text-champagne-600 flex items-center justify-center hover:bg-champagne-900/20 active:bg-champagne-950/40 transition-colors">
+                                    <Minus className="w-3.5 h-3.5" />
                                 </button>
-                                <span className="text-silk-200 text-xs font-bold w-4 text-center">{item.quantity}</span>
+                                <span className="text-silk-200 text-xs font-bold w-5 text-center">{item.quantity}</span>
                                 <button onClick={() => onSetQty(item.product.id, item.quantity + 1)}
-                                    className="w-6 h-6 rounded-lg bg-champagne-900/30 border border-champagne-700/25 text-champagne-500 flex items-center justify-center hover:bg-champagne-900/50 transition-colors">
-                                    <Plus className="w-3 h-3" />
+                                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-champagne-900/30 border border-champagne-700/25 text-champagne-500 flex items-center justify-center hover:bg-champagne-900/50 active:bg-champagne-800/60 transition-colors">
+                                    <Plus className="w-3.5 h-3.5" />
                                 </button>
                                 <button onClick={() => onRemove(item.product.id)}
-                                    className="w-6 h-6 rounded-lg text-red-500/40 hover:text-red-400 hover:bg-red-950/30 flex items-center justify-center transition-colors ms-0.5">
-                                    <Trash2 className="w-3 h-3" />
+                                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-red-500/40 hover:text-red-400 hover:bg-red-950/30 flex items-center justify-center transition-colors ms-0.5"
+                                    title="حذف">
+                                    <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                             </div>
                         </div>
@@ -360,21 +365,21 @@ function SaleSummary({ cartItems, cartTotal, onRemove, onSetQty, onReset, paymen
             </div>
 
             {/* Footer */}
-            <div className="flex-shrink-0 border-t border-champagne-900/15 p-4 space-y-3">
+            <div className="flex-shrink-0 border-t border-champagne-900/15 p-4 space-y-3 lg:space-y-4">
                 {/* Payment method toggle */}
                 <div>
-                    <p className="text-champagne-700 text-xs mb-1.5 font-medium">طريقة الدفع</p>
+                    <p className="text-champagne-700 text-xs mb-2 font-medium">طريقة الدفع</p>
                     <div className="grid grid-cols-2 gap-2">
                         {(["نقدي", "شبكة"] as const).map((m) => (
                             <button
                                 key={m}
                                 onClick={() => onSetPayment(m)}
-                                className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold border transition-all duration-200 ${paymentMethod === m
+                                className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold border transition-all duration-200 ${paymentMethod === m
                                     ? "bg-gradient-to-br from-champagne-500 to-champagne-700 text-charcoal-900 border-champagne-500 shadow-gold"
-                                    : "bg-transparent border-champagne-800/30 text-champagne-600 hover:border-champagne-600/50 hover:text-champagne-400"
+                                    : "bg-transparent border-champagne-800/30 text-champagne-600 hover:border-champagne-600/50 hover:text-champagne-400 active:bg-champagne-950/20"
                                     }`}
                             >
-                                <span>{m === "نقدي" ? "💵" : "💳"}</span>
+                                <span className="text-lg">{m === "نقدي" ? "💵" : "💳"}</span>
                                 <span>{m}</span>
                             </button>
                         ))}
@@ -382,11 +387,11 @@ function SaleSummary({ cartItems, cartTotal, onRemove, onSetQty, onReset, paymen
                 </div>
 
                 {/* Total */}
-                <div className="rounded-xl px-4 py-3 flex items-center justify-between border border-champagne-800/20" style={{ background: "rgba(13,17,15,0.6)" }}>
-                    <span className="text-silk-400 text-sm">الإجمالي</span>
-                    <div>
-                        <span className="gold-text font-black text-2xl">{cartTotal}</span>
-                        <span className="text-champagne-700 text-xs ms-1">ريال</span>
+                <div className="rounded-xl px-4 py-3 sm:py-4 flex items-center justify-between border border-champagne-800/20 shadow-inner" style={{ background: "rgba(13,17,15,0.6)" }}>
+                    <span className="text-silk-400 text-sm font-medium">الإجمالي المستحق</span>
+                    <div className="text-end">
+                        <span className="gold-text font-black text-2xl sm:text-3xl leading-none">{cartTotal}</span>
+                        <span className="text-champagne-700 text-xs sm:text-sm ms-1.5 font-bold">ريال</span>
                     </div>
                 </div>
 
@@ -394,9 +399,9 @@ function SaleSummary({ cartItems, cartTotal, onRemove, onSetQty, onReset, paymen
                 <button
                     onClick={onReset}
                     disabled={cartItems.length === 0}
-                    className="btn-gold w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="btn-gold w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-black active:scale-[0.98] transition-all disabled:opacity-40 disabled:grayscale disabled:cursor-not-allowed shadow-xl shadow-gold/5"
                 >
-                    <RotateCcw className="w-4 h-4" />
+                    <RotateCcw className="w-5 h-5" />
                     <span>تصفير للزبون التالي</span>
                 </button>
             </div>
