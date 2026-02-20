@@ -8,7 +8,7 @@ import {
     ShoppingBag, Banknote, CreditCard, TrendingUp, Calendar, RefreshCw,
 } from "lucide-react";
 import {
-    loadAllSales, groupByDay, clearAllSales, formatTime,
+    loadAllSales, groupByDay, clearAllSales, deleteSale, formatTime,
     type DaySummary, type SaleRecord,
 } from "@/lib/sales";
 import { isAuthenticated } from "@/lib/auth";
@@ -29,9 +29,10 @@ function SmokeIcon({ className = "" }: { className?: string }) {
 }
 
 // ── Single sale card ──
-function SaleCard({ sale }: { sale: SaleRecord }) {
+function SaleCard({ sale, onDelete }: { sale: SaleRecord; onDelete: (id: string) => void }) {
     const [expanded, setExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const handleCopy = async () => {
         const text =
@@ -89,6 +90,33 @@ function SaleCard({ sale }: { sale: SaleRecord }) {
                         {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
 
+                    {showDeleteConfirm ? (
+                        <div className="flex items-center gap-1">
+                            <button
+                                onClick={() => onDelete(sale.id)}
+                                className="w-7 h-7 rounded-lg bg-red-900/50 text-red-400 border border-red-500/30 flex items-center justify-center hover:bg-red-900/70 transition-colors"
+                                title="تأكيد الحذف"
+                            >
+                                <Check className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                                onClick={() => setShowDeleteConfirm(false)}
+                                className="w-7 h-7 rounded-lg border border-champagne-800/30 text-silk-500 flex items-center justify-center hover:text-silk-300 transition-colors"
+                                title="إلغاء"
+                            >
+                                <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => setShowDeleteConfirm(true)}
+                            className="w-7 h-7 rounded-lg border border-champagne-800/30 text-red-500/50 flex items-center justify-center hover:text-red-400 hover:border-red-500/40 transition-colors"
+                            title="حذف البيعة"
+                        >
+                            <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                    )}
+
                     <button
                         onClick={() => setExpanded(!expanded)}
                         className="w-7 h-7 rounded-lg border border-champagne-800/30 text-champagne-600 flex items-center justify-center hover:text-champagne-400 transition-colors"
@@ -115,7 +143,7 @@ function SaleCard({ sale }: { sale: SaleRecord }) {
 }
 
 // ── Day section ──
-function DaySection({ day }: { day: DaySummary }) {
+function DaySection({ day, onDeleteSale }: { day: DaySummary; onDeleteSale: (id: string) => void }) {
     const [open, setOpen] = useState(true);
     const [copied, setCopied] = useState(false);
 
@@ -184,7 +212,7 @@ function DaySection({ day }: { day: DaySummary }) {
             {open && (
                 <div className="space-y-2 mb-6">
                     {day.sales.map((sale) => (
-                        <SaleCard key={sale.id} sale={sale} />
+                        <SaleCard key={sale.id} sale={sale} onDelete={onDeleteSale} />
                     ))}
                 </div>
             )}
@@ -217,6 +245,26 @@ export default function SalesPage() {
         setDays([]);
         setShowClearConfirm(false);
         await clearAllSales();
+    };
+
+    const handleDeleteSale = async (id: string) => {
+        // Optimistic update
+        setDays((prev) => {
+            const next = prev.map((day) => ({
+                ...day,
+                sales: day.sales.filter((s) => s.id !== id),
+            })).filter((day) => day.sales.length > 0);
+
+            // Re-calculate totals for each day since they are derived once during groupByDay
+            return next.map((day) => {
+                const dayTotal = day.sales.reduce((acc, s) => acc + s.total, 0);
+                const cashTotal = day.sales.filter((s) => s.paymentMethod === "نقدي").reduce((acc, s) => acc + s.total, 0);
+                const networkTotal = day.sales.filter((s) => s.paymentMethod === "شبكة").reduce((acc, s) => acc + s.total, 0);
+                return { ...day, dayTotal, cashTotal, networkTotal };
+            });
+        });
+
+        await deleteSale(id);
     };
 
     const grandTotal = days.reduce((acc, d) => acc + d.dayTotal, 0);
@@ -309,7 +357,7 @@ export default function SalesPage() {
                         </Link>
                     </div>
                 ) : (
-                    days.map((day) => <DaySection key={day.dateKey} day={day} />)
+                    days.map((day) => <DaySection key={day.dateKey} day={day} onDeleteSale={handleDeleteSale} />)
                 )}
             </div>
 

@@ -119,10 +119,17 @@ export async function POST(req: Request) {
 }
 
 // ─── DELETE /api/sales ───────────────────────────────────────────────────────
-export async function DELETE() {
+export async function DELETE(req: Request) {
     try {
         await ensureTables();
-        await sql`DELETE FROM sales`;
+        const { searchParams } = new URL(req.url);
+        const id = searchParams.get("id");
+
+        if (id) {
+            await sql`DELETE FROM sales WHERE id = ${id}`;
+        } else {
+            await sql`DELETE FROM sales`;
+        }
         return NextResponse.json({ ok: true });
     } catch (err) {
         console.error("[DELETE /api/sales]", err);

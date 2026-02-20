@@ -62,6 +62,15 @@ export async function loadAllSales(): Promise<SaleRecord[]> {
     }
 }
 
+/** Delete a specific sale from the database. */
+export async function deleteSale(id: string): Promise<void> {
+    try {
+        await fetch(`/api/sales?id=${id}`, { method: "DELETE" });
+    } catch (err) {
+        console.error("deleteSale failed:", err);
+    }
+}
+
 /** Delete all sales from the database. */
 export async function clearAllSales(): Promise<void> {
     try {
