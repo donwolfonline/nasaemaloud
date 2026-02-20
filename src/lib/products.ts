@@ -3,14 +3,15 @@ export interface Product {
     category: string;
     name: string;
     price: number;
+    image?: string;
 }
 
 export const products: Product[] = [
     { id: "1", category: "العود", name: "دقة مروكي (أوقية)", price: 90 },
     { id: "2", category: "العود", name: "دقة مروكي (أوقيتين)", price: 150 },
-    { id: "3", category: "العود", name: "تايقر (أوقية)", price: 90 },
-    { id: "4", category: "العود", name: "تايقر (أوقيتين)", price: 150 },
-    { id: "41", category: "العود", name: "تايقر + دقة مروكي", price: 150 },
+    { id: "3", category: "العود", name: "تايقر (أوقية)", price: 90, image: "/images/products/tiger_oud.jpg" },
+    { id: "4", category: "العود", name: "تايقر (أوقيتين)", price: 150, image: "/images/products/tiger_oud.jpg" },
+    { id: "41", category: "العود", name: "تايقر + دقة مروكي", price: 150, image: "/images/products/tiger_oud.jpg" },
     { id: "5", category: "العود", name: "الكلمنتان (أوقية)", price: 120 },
     { id: "6", category: "العود", name: "الكلمنتان (أوقيتين)", price: 190 },
     { id: "7", category: "العود", name: "زوايا الكمبودي (أوقية)", price: 140 },

@@ -215,7 +215,15 @@ export default function DashboardPage() {
 
                                         {/* Tap area */}
                                         <button onClick={() => addProduct(product)} className="w-full p-2.5 sm:p-3 text-start relative group active:scale-[0.98] transition-transform">
-                                            <div className="text-xl sm:text-2xl mb-1.5 sm:mb-2">{categoryIcons[product.category]}</div>
+                                            <div className="mb-1.5 sm:mb-2 flex-shrink-0">
+                                                {product.image ? (
+                                                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden border border-champagne-800/20">
+                                                        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                                                    </div>
+                                                ) : (
+                                                    <div className="text-xl sm:text-2xl">{categoryIcons[product.category]}</div>
+                                                )}
+                                            </div>
                                             <p className="text-silk-200 text-[11px] sm:text-xs font-medium leading-tight mb-1.5 sm:mb-2 line-clamp-2 h-7 sm:h-8">
                                                 {product.name}
                                             </p>
@@ -336,7 +344,13 @@ function SaleSummary({ cartItems, cartTotal, onRemove, onSetQty, onReset, paymen
                 ) : (
                     cartItems.map((item) => (
                         <div key={item.product.id} className="luxury-card rounded-xl p-2 sm:p-2.5 flex items-center gap-2 animate-fade-in group active:scale-[0.99] transition-transform">
-                            <span className="text-xl flex-shrink-0">{categoryIcons[item.product.category]}</span>
+                            {item.product.image ? (
+                                <div className="w-9 h-9 rounded-lg overflow-hidden border border-champagne-800/10 flex-shrink-0">
+                                    <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                                </div>
+                            ) : (
+                                <span className="text-xl flex-shrink-0">{categoryIcons[item.product.category]}</span>
+                            )}
                             <div className="flex-1 min-w-0">
                                 <p className="text-silk-200 text-[11px] sm:text-xs font-medium truncate">{item.product.name}</p>
                                 <p className="text-champagne-600 text-[10px] sm:text-xs">
