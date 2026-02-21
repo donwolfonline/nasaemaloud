@@ -36,8 +36,7 @@ function SaleCard({ sale, onDelete }: { sale: SaleRecord; onDelete: (id: string)
 
     const handleCopy = async () => {
         const text =
-            `🕐 ${formatTime(sale.timestamp)}\n` +
-            sale.items.map((i) => `${i.name} × ${i.quantity} = ${i.total} ريال`).join("\n") +
+            sale.items.map((i) => `${i.name} = ${i.total} ريال`).join("\n") +
             `\n------------\nالإجمالي: ${sale.total} ريال\nطريقة الدفع: ${sale.paymentMethod}`;
         try { await navigator.clipboard.writeText(text); } catch {
             const ta = document.createElement("textarea");
@@ -149,14 +148,14 @@ function DaySection({ day, onDeleteSale }: { day: DaySummary; onDeleteSale: (id:
 
     const handleCopyDay = async () => {
         const lines = day.sales.map((s) =>
-            `${formatTime(s.timestamp)} — ${s.items.map((i) => `${i.name} ×${i.quantity}`).join("، ")} — ${s.total} ريال (${s.paymentMethod})`
+            `${s.items.map((i) => i.name).join("، ")} — ${s.total} ريال (${s.paymentMethod})`
         );
         const text =
-            `📅 ${day.label}\n` +
+            `${day.label}\n` +
             lines.join("\n") +
             `\n============\nإجمالي اليوم: ${day.dayTotal} ريال` +
-            (day.cashTotal > 0 ? `\n💵 نقدي: ${day.cashTotal} ريال` : "") +
-            (day.networkTotal > 0 ? `\n💳 شبكة: ${day.networkTotal} ريال` : "");
+            (day.cashTotal > 0 ? `\nنقدي: ${day.cashTotal} ريال` : "") +
+            (day.networkTotal > 0 ? `\nشبكة: ${day.networkTotal} ريال` : "");
         try { await navigator.clipboard.writeText(text); } catch {
             const ta = document.createElement("textarea");
             ta.value = text; document.body.appendChild(ta); ta.select();
